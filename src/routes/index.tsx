@@ -1,24 +1,40 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, Code2, Layers3, RotateCcw, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AIWorkspace } from "@/components/portfolio/ai-workspace";
+import { ProjectCard } from "@/components/portfolio/project-card";
+import { SectionHeading } from "@/components/portfolio/section";
+import { capabilities, experiments, projects, tools } from "@/data/portfolio";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({ meta: [{ title: "Lahu Andhale — Frontend Developer, UI Designer & Agentic UI Builder" }, { name: "description", content: "Portfolio of Lahu Andhale — a software engineer and digital product builder working across UI design, frontend engineering, AI interfaces and agentic experiences." }, { property: "og:title", content: "Lahu Andhale — Design × Code × AI" }, { property: "og:description", content: "Frontend developer, UI designer and agentic UI builder creating polished digital products." }, { property: "og:type", content: "website" }, { property: "og:url", content: "/" }, { name: "twitter:card", content: "summary_large_image" }], links: [{ rel: "canonical", href: "/" }] }),
+  component: HomePage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+function HomePage() {
+  return <>
+    <section className="hero grid-surface"><div className="hero-copy"><p className="eyebrow"><span /> DESIGN × CODE × AI</p><h1>I design and build digital experiences where <em>UI</em>, engineering, and <em>AI</em> come together.</h1><p className="hero-description">From thoughtful interfaces and responsive web experiences to intelligent and agentic UI, I turn complex ideas into products people can actually use.</p><div className="hero-actions"><Button asChild size="lg"><Link to="/work">Explore my work <ArrowRight /></Link></Button><Button asChild variant="outline" size="lg"><Link to="/contact">Let's work together</Link></Button></div><div className="hero-meta">{["Frontend", "UI / Web Design", "AI Interfaces", "Agentic UI"].map(item=><span key={item}>{item}</span>)}</div></div><div className="hero-product"><AIWorkspace /></div><a href="#intro" className="scroll-cue" aria-label="Scroll to introduction"><ArrowDown /></a></section>
+
+    <section className="intro section-pad" id="intro"><p className="eyebrow">01 / PERSPECTIVE</p><div><h2>Not just building interfaces.<br/><span>Designing how people interact with products.</span></h2><p>I enjoy working across the boundary between product design and engineering — simplifying complex workflows, creating thoughtful interfaces, and exploring what happens when AI becomes an active part of the interface rather than just another chatbot.</p></div></section>
+
+    <section className="capabilities section-pad"><SectionHeading eyebrow="02 / CAPABILITIES" title={<>One builder.<br/>Three connected disciplines.</>} /><div className="capability-grid">{capabilities.map(cap=><article key={cap.number} className="capability-card"><div className="capability-top"><span>{cap.number}</span><ArrowUpRight /></div><h3>{cap.title}</h3><p>{cap.copy}</p><div className="tag-cloud">{cap.skills.map(skill=><span key={skill}>{skill}</span>)}</div></article>)}</div></section>
+
+    <section className="work section-pad"><SectionHeading eyebrow="03 / SELECTED WORK" title="Products, systems, and interfaces." copy="A selection of professional work and self-initiated explorations across complex products, real-time systems and AI interfaces." /><div className="featured-work">{projects.slice(0,4).map(project=><ProjectCard key={project.slug} project={project} featured />)}</div><div className="section-action"><Button asChild variant="outline" size="lg"><Link to="/work">View all seven projects <ArrowRight /></Link></Button></div></section>
+
+    <section className="systems section-pad"><SectionHeading eyebrow="04 / DESIGN SYSTEMS" title="Systems, not screens." copy="I think in reusable patterns that hold together across states, breakpoints and real product workflows." /><div className="system-stage"><div className="system-menu">{["Typography","Colors","Inputs","Tables","Navigation","Feedback"].map((item,index)=><span className={index===2?"active":""} key={item}>0{index+1} {item}</span>)}</div><div className="system-canvas"><div className="type-sample"><small>DISPLAY / 64</small><strong>Aa</strong><p>Build with clarity.</p></div><div className="component-sample"><label>WORKSPACE NAME</label><div className="sample-input">Campaign workspace<span>⌘ K</span></div><div className="sample-actions"><Button size="sm">Create workspace</Button><Button size="sm" variant="outline">Preview</Button></div></div><div className="ai-components"><small>AI-SPECIFIC STATES</small>{["Streaming response","Tool execution","Approval request","Success / retry"].map((item,index)=><div key={item}><span className={index===1?"pulse-dot":""}>{index<3?<Check/>:<RotateCcw/>}</span>{item}<em>{index===2?"REVIEW":"READY"}</em></div>)}</div></div></div></section>
+
+    <section className="process section-pad"><SectionHeading eyebrow="05 / DESIGN → CODE" title="From Figma to production." copy="A good interface should not only look right in Figma — it should behave correctly when people actually use it." /><div className="process-flow">{["Idea","Wireframe","Visual design","Component system","Frontend","AI behavior","Production"].map((step,index)=><div key={step}><span>0{index+1}</span><strong>{step}</strong>{index<6&&<ArrowRight/>}</div>)}</div><div className="code-window"><div><span /><span /><span /></div><pre><code>{`type Action = {\n  intent: UserIntent\n  requiresApproval: boolean\n  rollback?: () => void\n}\n\nconst experience = design → code → behavior`}</code></pre></div></section>
+
+    <section className="agentic section-pad grid-surface"><SectionHeading eyebrow="06 / AGENTIC UI" title={<>Interfaces that don't just respond.<br/><span>They help users act.</span></>} /><div className="agentic-grid"><div className="flow-compare"><div><small>TRADITIONAL UI</small><p>User <ArrowRight/> Interface <ArrowRight/> Action <ArrowRight/> Result</p></div><div className="agentic-flow"><small>AGENTIC UI</small>{["User intent","Understands context","Plans","Uses tools","Shows progress","Requests approval","Executes","Allows undo"].map((item,index)=><span key={item}><i>{index<6?`0${index+1}`:<Check/>}</i>{item}</span>)}</div></div><div className="principles"><p>Agentic products need a new interaction grammar: one built around intent, visibility, approval and recovery.</p>{["Human in the loop","Transparency","User control","Explainable actions","Reversible actions","Context awareness","Clear agent state","Error recovery"].map(item=><span key={item}><Check/>{item}</span>)}</div></div></section>
+
+    <section className="about-preview section-pad"><SectionHeading eyebrow="07 / ABOUT" title={<>Engineer by training.<br/>Designer by curiosity.<br/><span>Builder by nature.</span></>} /><div className="about-copy"><p>Lahu Andhale is a software engineer and digital product builder interested in the intersection of interface design, frontend engineering, and AI.</p><p>Rather than being tied to a particular framework, he focuses on solving product problems and choosing the right technology for the experience.</p><Button asChild variant="outline"><Link to="/about">More about Lahu <ArrowRight /></Link></Button></div></section>
+
+    <section className="metrics section-pad">{[["95%","Report latency improvement"],["<30ms","Payment routing decision"],["11","Domain microservices"],["700+","DSA problems solved"],["40%","Less manual anomaly review"]].map(([metric,label])=><div key={label}><strong>{metric}</strong><span>{label}</span></div>)}</section>
+
+    <section className="tools section-pad"><SectionHeading eyebrow="08 / TOOLKIT" title="Tools I use to bring ideas to life." copy="Technologies are tools—not identity. The right choice depends on the product, people and problem." /><div className="tool-grid">{Object.entries(tools).map(([group,items])=><div key={group}><h3>{group}</h3><p>{items.join(" · ")}</p></div>)}</div></section>
+
+    <section className="lab section-pad"><SectionHeading eyebrow="09 / LAB" title="Things I'm currently exploring." /><div className="experiment-strip">{experiments.slice(0,5).map((experiment,index)=><Link to="/experiments" key={experiment}><span>0{index+1}</span><strong>{experiment}</strong><div className={`mini-demo mini-demo-${index}`}><i/><i/><i/></div><ArrowUpRight/></Link>)}</div></section>
+
+    <section className="contact-cta section-pad grid-surface"><p className="eyebrow">10 / LET'S BUILD</p><h2>Have an idea<br/>worth <span>building?</span></h2><p>Whether it's a product interface, marketing experience, AI workflow, or something that doesn't have a name yet — let's build it.</p><div><Button asChild size="lg"><Link to="/contact">Start a conversation <ArrowRight /></Link></Button><Button asChild size="lg" variant="outline"><a href="mailto:hello@lahuandhale.com">Email me</a></Button></div></section>
+  </>;
 }
