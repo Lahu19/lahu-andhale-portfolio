@@ -35,7 +35,8 @@ function CaseStudyPage() {
     ["AI behavior", project.caseStudy.ai], ["Engineering", project.caseStudy.engineering], ["Challenges", project.caseStudy.challenges], ["Learnings", project.caseStudy.learnings],
   ];
   const currentIndex = projects.findIndex((item) => item.slug === project.slug);
-  const nextProject = projects[(currentIndex + 1) % projects.length];
+  const nextProject = projects[(currentIndex + 1) % projects.length] ?? projects[0];
+  if (!nextProject) return null;
   return <div className="page-shell case-study">
     <header className="case-hero grid-surface"><div><p className="eyebrow">{project.number} / CASE STUDY</p><h1>{project.title}</h1></div><div><p>{project.description}</p><div className="case-meta"><span>{project.status}</span><span>{project.category}</span></div></div></header>
     <div className="case-cover"><ProjectVisual project={project} /></div>
