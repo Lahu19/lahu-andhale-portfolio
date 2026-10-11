@@ -378,6 +378,50 @@
   .case-evidence > div { border-top: 1px solid var(--portfolio-line); padding-top: 18px; }
   .case-evidence small { color: var(--portfolio-green); font: 10px var(--portfolio-mono); }
   .case-evidence p { margin-top: 12px; color: var(--portfolio-muted); font-size: 14px; line-height: 1.7; }
+  .routing-panel { margin-top: 12px; }
+  .routing-summary { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 12px; background: var(--portfolio-surface); }
+  .routing-summary small { display: block; color: var(--portfolio-muted); font: 7px var(--portfolio-mono); margin-top: 6px; }
+  .routing-summary strong { display: block; font-size: 30px; font-weight: 500; color: var(--portfolio-green); }
+  .routing-summary strong span { font-size: 12px; margin-left: 4px; }
+  .routing-summary p { font-size: 8px; color: var(--portfolio-muted); }
+  .routing-summary > div:last-child { font-size: 8px; }
+  .routing-map { display: grid; grid-template-columns: 1fr 16px 1fr 1.5fr; gap: 10px; align-items: center; padding: 20px 0; }
+  .routing-origin, .routing-engine { display: grid; justify-items: center; text-align: center; gap: 6px; padding: 12px 4px; border: 1px solid var(--portfolio-line); border-radius: 4px; }
+  .routing-map svg { width: 18px; height: 18px; color: var(--portfolio-green); }
+  .routing-map strong { font-size: 8px; }
+  .routing-map small { font-size: 6px; color: var(--portfolio-muted); }
+  .routing-engine { border-color: var(--portfolio-green-deep); }
+  .routing-providers { display: grid; gap: 6px; border-left: 1px solid var(--portfolio-line); padding-left: 10px; }
+  .routing-providers > div { display: flex; align-items: center; gap: 5px; background: var(--portfolio-surface); padding: 8px 6px; font-size: 7px; }
+  .routing-providers small { margin-left: auto; font-size: 5px; }
+  .routing-stream { border-top: 1px solid var(--portfolio-line); padding-top: 10px; }
+  .routing-stream > span { display: flex; align-items: center; gap: 5px; color: var(--portfolio-green); font: 7px var(--portfolio-mono); margin-bottom: 8px; }
+  .routing-stream svg { width: 12px; }
+  .routing-stream > div { display: flex; align-items: center; gap: 7px; padding: 6px 0; font-size: 8px; border-top: 1px solid var(--portfolio-line); }
+  .routing-stream i { width: 4px; height: 4px; background: var(--portfolio-green); border-radius: 50%; }
+  .routing-stream small { margin-left: auto; color: var(--portfolio-muted); font-size: 7px; }
+  .legal-panel { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; margin-top: 12px; }
+  .legal-matter { padding: 14px; border: 1px solid var(--portfolio-line); }
+  .legal-matter > small, .legal-assistant > small { font: 7px var(--portfolio-mono); color: var(--portfolio-muted); }
+  .legal-matter > strong { display: block; margin-top: 10px; font-size: 14px; }
+  .legal-matter > p { margin-top: 8px; font-size: 8px; color: var(--portfolio-muted); }
+  .legal-doc { display: flex; align-items: center; gap: 8px; margin-top: 16px; padding: 10px; background: var(--portfolio-surface); }
+  .legal-doc svg { width: 16px; color: var(--portfolio-green); }
+  .legal-doc strong { display: block; font-size: 8px; }
+  .legal-doc small { display: block; margin-top: 4px; font-size: 7px; color: var(--portfolio-muted); }
+  .legal-doc > span { margin-left: auto; font-size: 6px; color: var(--portfolio-muted); }
+  .legal-lines { display: grid; gap: 8px; margin-top: 18px; }
+  .legal-lines i { height: 3px; background: var(--portfolio-line); }
+  .legal-lines i:nth-child(2) { width: 85%; }
+  .legal-lines i:last-child { width: 65%; }
+  .legal-timeline { display: grid; gap: 8px; margin-top: 20px; }
+  .legal-timeline span { display: flex; align-items: center; gap: 6px; font-size: 8px; }
+  .legal-timeline svg { width: 10px; height: 10px; color: var(--portfolio-green); }
+  .legal-assistant { padding: 14px; background: var(--portfolio-surface); }
+  .legal-assistant > strong { display: block; margin-top: 20px; font-size: 14px; line-height: 1.3; }
+  .legal-assistant p { margin-top: 12px; color: var(--portfolio-muted); font-size: 9px; line-height: 1.6; }
+  .legal-assistant > div { display: flex; gap: 5px; align-items: center; margin-block: 20px; font-size: 8px; color: var(--portfolio-green); }
+  .legal-assistant > div svg { width: 11px; }
   .case-cover figcaption { padding-top: 12px; color: var(--portfolio-muted); font: 10px var(--portfolio-mono); }
   .case-block h2 { margin-top: 10px; }
   .next-project { border-top: 1px solid var(--portfolio-line); }

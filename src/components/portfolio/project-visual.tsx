@@ -21,7 +21,7 @@ export function ProjectVisual({ project, compact = false }: { project: Project; 
               <div><small>LIVE OVERVIEW</small><strong>{project.screens[0]}</strong></div>
               <span className="mock-action"><Sparkles /> Analyze</span>
             </div>
-            {project.tone === "agent" ? <AgentPanel /> : project.tone === "cogrow" ? <CreatorPanel /> : <DashboardPanel project={project} />}
+            {project.tone === "agent" ? <AgentPanel /> : project.tone === "cogrow" ? <CreatorPanel /> : project.tone === "flux" ? <RoutingPanel /> : project.tone === "legal" ? <LegalPanel /> : <DashboardPanel project={project} />}
           </div>
         </div>
       </div>
@@ -42,6 +42,14 @@ function DashboardPanel({ project }: { project: Project }) {
       <div className="mock-table"><div className="table-row header"><span>Item</span><span>Status</span><span>Updated</span></div>{project.screens.slice(1,4).map((screen, index) => <div className="table-row" key={screen}><span><FileText /> {screen}</span><span><i className="status-dot" /> {index === 1 ? "Review" : "Ready"}</span><span>{index + 2}m ago</span></div>)}</div>
     </div>
   );
+}
+
+function RoutingPanel() {
+  return <div className="routing-panel"><div className="routing-summary"><div><small>ROUTING ENGINE</small><strong>&lt;30<span>ms</span></strong><p>Routing decision target</p></div><div><span className="status-dot" /> All providers operational<small>ILLUSTRATIVE LIVE STATE</small></div></div><div className="routing-map"><div className="routing-origin"><CircleDollarSign /><strong>Payment request</strong><small>UPI · Cards · Wallets</small></div><ArrowUpRight /><div className="routing-engine"><Activity /><strong>Flux engine</strong><small>Rules + Redis state</small></div><div className="routing-providers">{["UPI gateway", "Card network", "Digital wallet"].map((provider, index) => <div key={provider}><span className="status-dot" /><span>{provider}</span><small>{index === 0 ? "SELECTED" : "STANDBY"}</small></div>)}</div></div><div className="routing-stream"><span><Activity /> EVENT STREAM</span><div><i />Request validated <small>Idempotency checked</small></div><div><i />Healthy path selected <small>Rule-based decision</small></div><div><i />Event published <small>Kafka → Monitoring</small></div></div></div>;
+}
+
+function LegalPanel() {
+  return <div className="legal-panel"><div className="legal-matter"><small>ACTIVE MATTER / SAMPLE</small><strong>Commercial agreement review</strong><p>Documents, decisions, and context in one workspace.</p><div className="legal-doc"><FileText /><div><strong>Service agreement.pdf</strong><small>Version 03 · Ready for review</small></div><span>12 pages</span></div><div className="legal-lines"><i /><i /><i /><i /></div><div className="legal-timeline"><span><Check /> Document received</span><span><Check /> Context prepared</span><span><Activity /> Review in progress</span></div></div><div className="legal-assistant"><span className="ai-label"><Sparkles /> REVIEW ASSISTANT</span><strong>Key terms, in context.</strong><p>Termination, liability, and renewal clauses are ready for human review.</p><div><FileText /> 3 relevant sections</div><small>Source-linked · Review required</small></div></div>;
 }
 
 function CreatorPanel() {
