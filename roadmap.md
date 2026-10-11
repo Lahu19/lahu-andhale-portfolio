@@ -5,3 +5,5 @@
 - [x] Add interactive filters, AI workspace, motion, and mobile navigation
 - [x] Add route-specific metadata and accessibility details
 - [ ] Verify desktop/mobile rendering and interactions
+- [ ] Strengthen recruiter-facing first impression and project presentation
+- [ ] Audit built-in SEO and remove misleading contact actions
