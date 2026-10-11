@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight, Check, Mail, Send } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,36 +22,43 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
-  const [sent, setSent] = useState(false);
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const [copied, setCopied] = useState(false);
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSent(true);
-    toast.success("Thanks — your note is ready to send.");
+    const values = new FormData(event.currentTarget);
+    const message = `Name: ${values.get("name")}\nEmail: ${values.get("email")}\n\n${values.get("message")}`;
+    try {
+      await navigator.clipboard.writeText(message);
+      setCopied(true);
+      toast.success("Message copied. Nothing has been sent.");
+    } catch {
+      toast.error("Could not copy. Please select and copy your message manually.");
+    }
   }
 
   return (
     <div className="page-shell">
       <header className="contact-hero grid-surface">
-        <p className="eyebrow">LET'S BUILD / CONTACT</p>
-        <h1>Bring the rough idea.<br />I’ll help shape the <span>experience.</span></h1>
-        <p>Whether you need a product interface, a thoughtful frontend system, an AI workflow, or a second pair of eyes on a complex interaction, I’d love to hear what you’re working on.</p>
+        <p className="eyebrow">CONTACT / LAHU ANDHALE</p>
+        <h1>Good products start<br />with a <span>conversation.</span></h1>
+        <p>A frontend role, a product challenge, or an AI experience worth exploring — let's talk about what your team wants to build.</p>
       </header>
       <section className="contact-layout section-pad">
         <div className="contact-copy">
-          <h2>Start with a useful conversation.</h2>
-          <p>No pitch deck required. Share what you’re trying to make, where it feels stuck, and what a good outcome would look like.</p>
-          <div className="contact-links">
-            <a href="mailto:hello@lahuandhale.com"><span><Mail /> hello@lahuandhale.com</span><ArrowUpRight /></a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><span>LinkedIn <small>profile link to be updated</small></span><ArrowUpRight /></a>
-            <a href="https://github.com/" target="_blank" rel="noreferrer"><span>GitHub <small>profile link to be updated</small></span><ArrowUpRight /></a>
-            <a href="mailto:hello@lahuandhale.com?subject=Resume request"><span>Resume <small>available on request</small></span><ArrowUpRight /></a>
+          <h2>Design thinking.<br />Engineering follow-through.</h2>
+          <p>I’m interested in work where product design, frontend engineering, and AI meet.</p>
+          <div className="contact-summary">
+            <div><small>PRODUCT INTERFACES</small><p>Enterprise workflows, financial products, and experiences that make complex information clear.</p></div>
+            <div><small>FRONTEND ENGINEERING</small><p>Reusable systems, real-time interactions, and thoughtful implementation across screen sizes.</p></div>
+            <div><small>AI & AGENTIC UI</small><p>Transparent progress, understandable recommendations, and human approval before action.</p></div>
           </div>
         </div>
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form className="contact-form" onSubmit={handleSubmit} onChange={() => setCopied(false)}>
           <label>Your name<Input name="name" placeholder="How should I address you?" required /></label>
           <label>Email address<Input name="email" type="email" placeholder="you@company.com" required /></label>
-          <label>What are you building?<Textarea name="message" placeholder="A little context goes a long way." required /></label>
-          <Button type="submit" size="lg" disabled={sent}>{sent ? <><Check /> Message noted</> : <><Send /> Send your note</>}</Button>
+          <label>Your message<Textarea name="message" placeholder="Tell me about the role, your team, or the product." required /></label>
+          <p className="draft-note">Direct contact details are not connected yet. You can prepare and copy a message; this form does not send it.</p>
+          <Button type="submit" size="lg">{copied ? <><Check /> Message copied</> : <><Copy /> Copy message draft</>}</Button>
         </form>
       </section>
     </div>

@@ -37,9 +37,9 @@ function ExperimentsPage() {
         <div className="experiment-lab">
           <div className="experiment-list" role="tablist" aria-label="Experiment topics">
             {experiments.map((experiment, index) => (
-              <button key={experiment} className={active === index ? "active" : ""} onClick={() => { setActive(index); setApproved(false); }} role="tab" aria-selected={active === index}>
+              <Button variant="ghost" key={experiment} className={active === index ? "active" : ""} onClick={() => { setActive(index); setApproved(false); }} role="tab" aria-selected={active === index}>
                 <span>0{index + 1}</span>{experiment}<ArrowRight />
-              </button>
+              </Button>
             ))}
           </div>
           <div className="experiment-detail" role="tabpanel">
