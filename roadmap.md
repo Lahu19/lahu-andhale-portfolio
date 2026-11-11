@@ -4,6 +4,8 @@
 - [x] Build seven project case studies with honest labels
 - [x] Add interactive filters, AI workspace, motion, and mobile navigation
 - [x] Add route-specific metadata and accessibility details
-- [ ] Verify desktop/mobile rendering and interactions
-- [ ] Strengthen recruiter-facing first impression and project presentation
-- [ ] Audit built-in SEO and remove misleading contact actions
+- [x] Verify desktop/mobile rendering and interactions
+- [x] Strengthen recruiter-facing first impression and project presentation
+- [x] Audit built-in SEO and remove misleading contact actions
+- [ ] Connect real email, LinkedIn, GitHub and resume — waiting for Lahu's destinations
+- [ ] Add sitemap for the public domain — waiting for publication/domain
