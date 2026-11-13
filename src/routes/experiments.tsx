@@ -3,15 +3,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, Check, Circle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/portfolio/section";
-import { experiments } from "@/data/portfolio";
+import { getResume } from "@/lib/resume-store";
 
 export const Route = createFileRoute("/experiments")({
-  head: () => ({
+  loader: () => getResume(),
+  head: ({ loaderData: r }) => ({
     meta: [
-      { title: "Experiments — Lahu Andhale" },
-      { name: "description", content: "A living lab of agentic UI, adaptive interfaces, real-time collaboration, and human-in-the-loop product ideas." },
-      { property: "og:title", content: "Experiments — Lahu Andhale" },
-      { property: "og:description", content: "Explorations into what digital products can become when interfaces understand context and help people act." },
+      { title: `Experiments — ${r.meta.name}` },
+      { name: "description", content: "A living lab of agentic workflows, AI automation patterns, Kafka idempotency, LLM fine-tuning, and backend engineering explorations." },
+      { property: "og:title", content: `Experiments — ${r.meta.name}` },
+      { property: "og:description", content: "Explorations into distributed systems patterns, agentic AI workflows, and self-healing backend architectures." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/experiments")({
 });
 
 function ExperimentsPage() {
+  const { experiments } = Route.useLoaderData();
   const [active, setActive] = useState(0);
   const [approved, setApproved] = useState(false);
   const activeExperiment = experiments[active] ?? experiments[0];

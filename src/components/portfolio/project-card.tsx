@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import type { Project } from "@/data/portfolio";
+import type { Project } from "@/lib/resume-store";
 import { ProjectVisual } from "./project-visual";
 
 export function ProjectCard({ project, featured = false }: { project: Project; featured?: boolean }) {

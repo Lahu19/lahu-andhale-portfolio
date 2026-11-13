@@ -1,44 +1,348 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, RotateCcw } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AIWorkspace } from "@/components/portfolio/ai-workspace";
 import { ProjectCard } from "@/components/portfolio/project-card";
 import { SectionHeading } from "@/components/portfolio/section";
-import { capabilities, experiments, projects, tools } from "@/data/portfolio";
+import { getResume } from "@/lib/resume-store";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Lahu Andhale — Frontend Developer, UI Designer & Agentic UI Builder" }, { name: "description", content: "Portfolio of Lahu Andhale — a software engineer and digital product builder working across UI design, frontend engineering, AI interfaces and agentic experiences." }, { property: "og:title", content: "Lahu Andhale — Design × Code × AI" }, { property: "og:description", content: "Frontend developer, UI designer and agentic UI builder creating polished digital products." }, { property: "og:type", content: "website" }, { property: "og:url", content: "/" }, { name: "twitter:card", content: "summary_large_image" }], links: [{ rel: "canonical", href: "/" }] }),
+  loader: () => getResume(),
+  head: ({ loaderData: r }) => ({
+    meta: [
+      { title: `${r.meta.name} — ${r.meta.title}` },
+      { name: "description", content: r.meta.summary },
+      { property: "og:title", content: `${r.meta.name} — ${r.meta.title}` },
+      { property: "og:description", content: r.meta.heroDescription },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+  }),
   component: HomePage,
 });
 
 function HomePage() {
-  return <>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Person", name: "Lahu Andhale", jobTitle: "Associate Software Engineer", description: "Digital product builder working across interface design, frontend engineering, AI and agentic UI.", worksFor: { "@type": "Organization", name: "Visionwaves Technologies" }, knowsAbout: ["Frontend engineering", "UI design", "AI interfaces", "Agentic UI", "Design systems"] }) }} />
-    <section className="hero recruiter-hero"><div className="hero-topline"><p className="eyebrow"><span /> DESIGN × CODE × AI</p><p>Frontend Developer · UI Designer · AI & Agentic UI Builder</p></div><h1>Lahu Andhale<span className="name-period">.</span></h1><div className="hero-bottom"><div className="hero-copy"><h2>Thoughtful interfaces.<br/>Real engineering.<br/><span>Useful AI.</span></h2><p className="hero-description">I turn complex workflows and rough ideas into clear, usable digital products — from the first design decision to the final interaction.</p><div className="hero-actions"><Button asChild size="lg"><Link to="/work">See selected work <ArrowUpRight /></Link></Button><Button asChild variant="outline" size="lg"><Link to="/about">Experience & background <ArrowRight /></Link></Button></div><p className="hero-current">ASSOCIATE SOFTWARE ENGINEER <span>at Visionwaves Technologies</span></p></div><div className="hero-product"><div className="workspace-caption"><span>INTERACTION STUDY / 001</span><span>HUMAN × AGENT</span></div><AIWorkspace /></div></div></section>
+  const r = Route.useLoaderData();
+  const { meta, projects, capabilities, tools, experiments, metrics } = r;
 
-    <section className="proof-strip" aria-label="Engineering achievements"><div><strong>95%</strong><span>Lower report latency</span></div><div><strong>&lt;30ms</strong><span>FluxPay routing decisions</span></div><div><strong>11</strong><span>Domain microservices</span></div><Link to="/about">The experience behind the work <ArrowUpRight /></Link></section>
+  const featured = [projects[2], projects[1], projects[0], projects[4]].filter(Boolean);
 
-    <section className="work section-pad recruiter-work"><SectionHeading eyebrow="01 / SELECTED WORK" title={<>Complex problems.<br/><span>Clear experiences.</span></>} copy="Professional engineering work and self-initiated interface studies. A look at the problem, the decisions, and the product." /><div className="featured-work">{[projects[2], projects[1], projects[0], projects[4]].filter((project) => project !== undefined).map(project=><ProjectCard key={project.slug} project={project} featured />)}</div><div className="section-action"><Button asChild variant="outline" size="lg"><Link to="/work">Explore all seven case studies <ArrowRight /></Link></Button></div></section>
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: meta.name,
+            jobTitle: meta.title,
+            description: meta.summary,
+            worksFor: {
+              "@type": "Organization",
+              name: r.experience[0]?.company ?? "",
+            },
+            knowsAbout: Object.values(tools).flat().slice(0, 8),
+            email: meta.email,
+            url: meta.linkedin,
+          }),
+        }}
+      />
 
-    <section className="intro section-pad" id="intro"><p className="eyebrow">01 / PERSPECTIVE</p><div><h2>Not just building interfaces.<br/><span>Designing how people interact with products.</span></h2><p>I enjoy working across the boundary between product design and engineering — simplifying complex workflows, creating thoughtful interfaces, and exploring what happens when AI becomes an active part of the interface rather than just another chatbot.</p></div></section>
+      {/* ── Hero ── */}
+      <section className="hero recruiter-hero">
+        <div className="hero-topline">
+          <p className="eyebrow">
+            <span /> {meta.heroEyebrow}
+          </p>
+          <p>{meta.heroSubtitle}</p>
+        </div>
+        <h1>
+          {meta.name}
+          <span className="name-period">.</span>
+        </h1>
+        <div className="hero-bottom">
+          <div className="hero-copy">
+            <h2>
+              {meta.tagline1}
+              <br />
+              {meta.tagline2}
+              <br />
+              <span>{meta.tagline3}</span>
+            </h2>
+            <p className="hero-description">{meta.heroDescription}</p>
+            <div className="hero-actions">
+              <Button asChild size="lg">
+                <Link to="/work">
+                  See selected work <ArrowUpRight />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link to="/about">
+                  Experience &amp; background <ArrowRight />
+                </Link>
+              </Button>
+            </div>
+            <p className="hero-current">
+              {r.experience[0]?.role?.toUpperCase()}{" "}
+              <span>at {r.experience[0]?.company}</span>
+            </p>
+          </div>
+          <div className="hero-product">
+            <div className="workspace-caption">
+              <span>INTERACTION STUDY / 001</span>
+              <span>HUMAN × AGENT</span>
+            </div>
+            <AIWorkspace />
+          </div>
+        </div>
+      </section>
 
-    <section className="capabilities section-pad"><SectionHeading eyebrow="02 / CAPABILITIES" title={<>One builder.<br/>Three connected disciplines.</>} /><div className="capability-grid">{capabilities.map(cap=><article key={cap.number} className="capability-card"><div className="capability-top"><span>{cap.number}</span><ArrowUpRight /></div><h3>{cap.title}</h3><p>{cap.copy}</p><div className="tag-cloud">{cap.skills.map(skill=><span key={skill}>{skill}</span>)}</div></article>)}</div></section>
+      {/* ── Proof strip ── */}
+      <section className="proof-strip" aria-label="Engineering achievements">
+        {metrics.slice(0, 3).map((m) => (
+          <div key={m.label}>
+            <strong>{m.value}</strong>
+            <span>{m.label}</span>
+          </div>
+        ))}
+        <Link to="/about">
+          The experience behind the work <ArrowUpRight />
+        </Link>
+      </section>
 
+      {/* ── Selected work ── */}
+      <section className="work section-pad recruiter-work">
+        <SectionHeading
+          eyebrow="01 / SELECTED WORK"
+          title={
+            <>
+              Complex problems.
+              <br />
+              <span>Real solutions.</span>
+            </>
+          }
+          copy="Professional engineering work and self-initiated studies. A look at the problem, the decisions, and the outcome."
+        />
+        <div className="featured-work">
+          {featured.map((project) => (
+            <ProjectCard key={project.slug} project={project} featured />
+          ))}
+        </div>
+        <div className="section-action">
+          <Button asChild variant="outline" size="lg">
+            <Link to="/work">
+              Explore all case studies <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+      </section>
 
-    <section className="systems section-pad"><SectionHeading eyebrow="04 / DESIGN SYSTEMS" title="Systems, not screens." copy="I think in reusable patterns that hold together across states, breakpoints and real product workflows." /><div className="system-stage"><div className="system-menu">{["Typography","Colors","Inputs","Tables","Navigation","Feedback"].map((item,index)=><span className={index===2?"active":""} key={item}>0{index+1} {item}</span>)}</div><div className="system-canvas"><div className="type-sample"><small>DISPLAY / 64</small><strong>Aa</strong><p>Build with clarity.</p></div><div className="component-sample"><label>WORKSPACE NAME</label><div className="sample-input">Campaign workspace<span>⌘ K</span></div><div className="sample-actions"><Button size="sm">Create workspace</Button><Button size="sm" variant="outline">Preview</Button></div></div><div className="ai-components"><small>AI-SPECIFIC STATES</small>{["Streaming response","Tool execution","Approval request","Success / retry"].map((item,index)=><div key={item}><span className={index===1?"pulse-dot":""}>{index<3?<Check/>:<RotateCcw/>}</span>{item}<em>{index===2?"REVIEW":"READY"}</em></div>)}</div></div></div></section>
+      {/* ── Perspective ── */}
+      <section className="intro section-pad" id="intro">
+        <p className="eyebrow">02 / PERSPECTIVE</p>
+        <div>
+          <h2>
+            Not just writing code.
+            <br />
+            <span>Engineering systems that scale and self-heal.</span>
+          </h2>
+          <p>
+            I build production backend systems where correctness, latency and resilience
+            are not trade-offs — they are requirements. Lately that work has expanded into
+            agentic AI workflows, where the system understands failures and fixes itself
+            without waiting for a human to intervene.
+          </p>
+        </div>
+      </section>
 
-    <section className="process section-pad"><SectionHeading eyebrow="05 / DESIGN → CODE" title="From Figma to production." copy="A good interface should not only look right in Figma — it should behave correctly when people actually use it." /><div className="process-flow">{["Idea","Wireframe","Visual design","Component system","Frontend","AI behavior","Production"].map((step,index)=><div key={step}><span>0{index+1}</span><strong>{step}</strong>{index<6&&<ArrowRight/>}</div>)}</div><div className="code-window"><div><span /><span /><span /></div><pre><code>{`type Action = {\n  intent: UserIntent\n  requiresApproval: boolean\n  rollback?: () => void\n}\n\nconst experience = design → code → behavior`}</code></pre></div></section>
+      {/* ── Capabilities ── */}
+      <section className="capabilities section-pad">
+        <SectionHeading
+          eyebrow="03 / CAPABILITIES"
+          title={
+            <>
+              One engineer.
+              <br />
+              Three connected disciplines.
+            </>
+          }
+        />
+        <div className="capability-grid">
+          {capabilities.map((cap) => (
+            <article key={cap.number} className="capability-card">
+              <div className="capability-top">
+                <span>{cap.number}</span>
+                <ArrowUpRight />
+              </div>
+              <h3>{cap.title}</h3>
+              <p>{cap.copy}</p>
+              <div className="tag-cloud">
+                {cap.skills.map((skill) => (
+                  <span key={skill}>{skill}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-    <section className="agentic section-pad grid-surface"><SectionHeading eyebrow="06 / AGENTIC UI" title={<>Interfaces that don't just respond.<br/><span>They help users act.</span></>} /><div className="agentic-grid"><div className="flow-compare"><div><small>TRADITIONAL UI</small><p>User <ArrowRight/> Interface <ArrowRight/> Action <ArrowRight/> Result</p></div><div className="agentic-flow"><small>AGENTIC UI</small>{["User intent","Understands context","Plans","Uses tools","Shows progress","Requests approval","Executes","Allows undo"].map((item,index)=><span key={item}><i>{index<6?`0${index+1}`:<Check/>}</i>{item}</span>)}</div></div><div className="principles"><p>Agentic products need a new interaction grammar: one built around intent, visibility, approval and recovery.</p>{["Human in the loop","Transparency","User control","Explainable actions","Reversible actions","Context awareness","Clear agent state","Error recovery"].map(item=><span key={item}><Check/>{item}</span>)}</div></div></section>
+      {/* ── Agentic section ── */}
+      <section className="agentic section-pad grid-surface">
+        <SectionHeading
+          eyebrow="04 / AGENTIC AI"
+          title={
+            <>
+              Systems that don&apos;t just respond.
+              <br />
+              <span>They act, adapt, and recover.</span>
+            </>
+          }
+        />
+        <div className="agentic-grid">
+          <div className="flow-compare">
+            <div>
+              <small>TRADITIONAL SYSTEM</small>
+              <p>
+                Request <ArrowRight /> Service <ArrowRight /> Response
+              </p>
+            </div>
+            <div className="agentic-flow">
+              <small>AGENTIC SYSTEM</small>
+              {[
+                "Receives intent",
+                "Understands context",
+                "Plans action",
+                "Executes with tools",
+                "Monitors result",
+                "Self-heals on failure",
+                "Logs & observes",
+                "Improves over time",
+              ].map((item, index) => (
+                <span key={item}>
+                  <i>{index < 6 ? `0${index + 1}` : <Check />}</i>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="principles">
+            <p>
+              Agentic backend systems need an engineering grammar for intent, planning,
+              tool execution, failure recovery, and observability.
+            </p>
+            {[
+              "Idempotent execution",
+              "Exactly-once processing",
+              "Self-healing workflows",
+              "Observability first",
+              "Fault tolerance",
+              "Graceful degradation",
+              "LLM-powered reasoning",
+              "Human-in-the-loop",
+            ].map((item) => (
+              <span key={item}>
+                <Check />
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
 
-    <section className="about-preview section-pad"><SectionHeading eyebrow="07 / ABOUT" title={<>Engineer by training.<br/>Designer by curiosity.<br/><span>Builder by nature.</span></>} /><div className="about-copy"><p>Lahu Andhale is a software engineer and digital product builder interested in the intersection of interface design, frontend engineering, and AI.</p><p>Rather than being tied to a particular framework, he focuses on solving product problems and choosing the right technology for the experience.</p><Button asChild variant="outline"><Link to="/about">More about Lahu <ArrowRight /></Link></Button></div></section>
+      {/* ── About preview ── */}
+      <section className="about-preview section-pad">
+        <SectionHeading
+          eyebrow="05 / ABOUT"
+          title={
+            <>
+              {meta.aboutHeading1}
+              <br />
+              {meta.aboutHeading2}
+              <br />
+              <span>{meta.aboutHeading3}</span>
+            </>
+          }
+        />
+        <div className="about-copy">
+          <p>{meta.aboutPara1}</p>
+          <p>{meta.aboutPara2}</p>
+          <Button asChild variant="outline">
+            <Link to="/about">
+              More about {meta.name.split(" ")[0]} <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+      </section>
 
-    <section className="metrics section-pad">{[["95%","Report latency improvement"],["<30ms","Payment routing decision"],["11","Domain microservices"],["700+","DSA problems solved"],["40%","Less manual anomaly review"]].map(([metric,label])=><div key={label}><strong>{metric}</strong><span>{label}</span></div>)}</section>
+      {/* ── Metrics ── */}
+      <section className="metrics section-pad">
+        {metrics.map(({ value, label }) => (
+          <div key={label}>
+            <strong>{value}</strong>
+            <span>{label}</span>
+          </div>
+        ))}
+      </section>
 
-    <section className="tools section-pad"><SectionHeading eyebrow="08 / TOOLKIT" title="Tools I use to bring ideas to life." copy="Technologies are tools—not identity. The right choice depends on the product, people and problem." /><div className="tool-grid">{Object.entries(tools).map(([group,items])=><div key={group}><h3>{group}</h3><p>{items.join(" · ")}</p></div>)}</div></section>
+      {/* ── Toolkit ── */}
+      <section className="tools section-pad">
+        <SectionHeading
+          eyebrow="06 / TOOLKIT"
+          title="Technologies that serve the problem."
+          copy="The right choice depends on the system requirements, not personal preference."
+        />
+        <div className="tool-grid">
+          {Object.entries(tools).map(([group, items]) => (
+            <div key={group}>
+              <h3>{group}</h3>
+              <p>{items.join(" · ")}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-    <section className="lab section-pad"><SectionHeading eyebrow="09 / LAB" title="Things I'm currently exploring." /><div className="experiment-strip">{experiments.slice(0,5).map((experiment,index)=><Link to="/experiments" key={experiment}><span>0{index+1}</span><strong>{experiment}</strong><div className={`mini-demo mini-demo-${index}`}><i/><i/><i/></div><ArrowUpRight/></Link>)}</div></section>
+      {/* ── Lab ── */}
+      <section className="lab section-pad">
+        <SectionHeading eyebrow="07 / LAB" title="Things I am currently exploring." />
+        <div className="experiment-strip">
+          {experiments.slice(0, 5).map((experiment, index) => (
+            <Link to="/experiments" key={experiment}>
+              <span>0{index + 1}</span>
+              <strong>{experiment}</strong>
+              <div className={`mini-demo mini-demo-${index}`}>
+                <i />
+                <i />
+                <i />
+              </div>
+              <ArrowUpRight />
+            </Link>
+          ))}
+        </div>
+      </section>
 
-    <section className="contact-cta section-pad"><p className="eyebrow">10 / LET'S BUILD</p><h2>Have an idea<br/>worth <span>building?</span></h2><p>Whether it's a product interface, marketing experience, AI workflow, or something that doesn't have a name yet — let's build it.</p><div><Button asChild size="lg"><Link to="/contact">Start a conversation <ArrowRight /></Link></Button></div></section>
-  </>;
+      {/* ── CTA ── */}
+      <section className="contact-cta section-pad">
+        <p className="eyebrow">08 / CONTACT</p>
+        <h2>
+          Ready to build
+          <br />
+          something <span>real?</span>
+        </h2>
+        <p>
+          Backend roles, distributed systems challenges, or AI-infrastructure projects —
+          let's talk.
+        </p>
+        <div>
+          <Button asChild size="lg">
+            <Link to="/contact">
+              Start a conversation <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+      </section>
+    </>
+  );
 }

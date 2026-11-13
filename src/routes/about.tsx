@@ -1,6 +1,120 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Check } from "lucide-react";
+import { Award, Check } from "lucide-react";
 import { SectionHeading } from "@/components/portfolio/section";
-import { tools } from "@/data/portfolio";
-export const Route=createFileRoute("/about")({head:()=>({meta:[{title:"About Lahu Andhale — Product Builder"},{name:"description",content:"Lahu Andhale is a software engineer and digital product builder working across design, frontend engineering and AI."},{property:"og:title",content:"About Lahu Andhale"},{property:"og:description",content:"Engineer by training. Designer by curiosity. Builder by nature."},{property:"og:type",content:"profile"},{name:"twitter:card",content:"summary_large_image"}],links:[{rel:"canonical",href:"/about"}]}),component:AboutPage});
-function AboutPage(){return <div className="page-shell"><header className="about-hero grid-surface"><p className="eyebrow">ABOUT / LAHU ANDHALE</p><h1>Engineer by training.<br/>Designer by curiosity.<br/><span>Builder by nature.</span></h1><div><p>Lahu Andhale is a software engineer and digital product builder interested in the intersection of interface design, frontend engineering, and AI.</p><p>His work spans enterprise systems, financial products, real-time applications, AI-powered experiences, and modern product interfaces.</p><p>Rather than being tied to a particular framework, he focuses on solving product problems and choosing the right technology for the experience.</p></div></header><section className="experience section-pad"><SectionHeading eyebrow="01 / EXPERIENCE" title="Building across product and systems."/><div className="timeline"><article><span>2025 — PRESENT</span><div><h3>Visionwaves Technologies</h3><p className="role">Associate Software Engineer</p><p>Enterprise financial systems, microservices, AI-integrated services, Kafka, Redis, performance engineering, observability and production systems.</p><div className="tag-cloud">{["95% report latency improvement","<30ms FluxPay routing","11 domain microservices","40% less manual anomaly review"].map(x=><span key={x}>{x}</span>)}</div></div></article><article><span>2023 — 2024</span><div><h3>Collab Vision Infosolutions</h3><p className="role">Software Engineer Intern</p><p>React, Node.js, Express, REST APIs, WebSockets and full-stack applications.</p></div></article></div></section><section className="recognition section-pad"><SectionHeading eyebrow="02 / ACHIEVEMENTS" title="Proof in the work."/><div className="metrics about-metrics">{[["95%","Report latency improvement"],["<30ms","Routing decision"],["11","Domain microservices"],["700+","DSA problems solved"],["40%","Less manual review"]].map(([a,b])=><div key={b}><strong>{a}</strong><span>{b}</span></div>)}</div><div className="recognition-list"><p><Check/> Hacktoberfest contributor</p><p><Check/> IJRASET research publication</p></div></section><section className="tools section-pad"><SectionHeading eyebrow="03 / TOOLKIT" title="Technology serves the experience."/><div className="tool-grid">{Object.entries(tools).map(([group,items])=><div key={group}><h3>{group}</h3><p>{items.join(" · ")}</p></div>)}</div></section></div>}
+import { getResume } from "@/lib/resume-store";
+
+export const Route = createFileRoute("/about")({
+  loader: () => getResume(),
+  head: ({ loaderData: r }) => ({
+    meta: [
+      { title: `About ${r.meta.name} — ${r.meta.title}` },
+      { name: "description", content: r.meta.summary },
+      { property: "og:title", content: `About ${r.meta.name}` },
+      {
+        property: "og:description",
+        content: `${r.meta.aboutHeading1} ${r.meta.aboutHeading2} ${r.meta.aboutHeading3}`,
+      },
+      { property: "og:type", content: "profile" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "/about" }],
+  }),
+  component: AboutPage,
+});
+
+function AboutPage() {
+  const r = Route.useLoaderData();
+  const { meta, experience, education, achievements, metrics, tools, certifications } = r;
+
+  return (
+    <div className="page-shell">
+      {/* ── Hero ── */}
+      <header className="about-hero grid-surface">
+        <p className="eyebrow">ABOUT / {meta.name.toUpperCase()}</p>
+        <h1>
+          {meta.aboutHeading1}
+          <br />
+          {meta.aboutHeading2}
+          <br />
+          <span>{meta.aboutHeading3}</span>
+        </h1>
+        <div>
+          <p>{meta.aboutPara1}</p>
+          <p>{meta.aboutPara2}</p>
+          <p>{meta.aboutPara3}</p>
+        </div>
+      </header>
+
+      {/* ── Experience ── */}
+      <section className="experience section-pad">
+        <SectionHeading eyebrow="01 / EXPERIENCE" title="Building across backend and AI systems." />
+        <div className="timeline">
+          {experience.map((exp) => (
+            <article key={exp.id}>
+              <span>
+                {exp.startDate.toUpperCase()} — {exp.endDate.toUpperCase()}
+              </span>
+              <div>
+                <h3>{exp.company}</h3>
+                <p className="role">
+                  {exp.role} · {exp.location}
+                </p>
+                <p>{exp.description}</p>
+                {exp.tags.length > 0 && (
+                  <div className="tag-cloud">
+                    {exp.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Achievements & metrics ── */}
+      <section className="recognition section-pad">
+        <SectionHeading eyebrow="02 / ACHIEVEMENTS" title="Proof in the work." />
+        <div className="metrics about-metrics">
+          {metrics.map(({ value, label }) => (
+            <div key={label}>
+              <strong>{value}</strong>
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="recognition-list">
+          {certifications && certifications.length > 0 && certifications.map((cert) => (
+            <p key={cert.id}>
+              <Award size={16} /> <strong>{cert.title}</strong> — {cert.issuer} ({cert.date}{cert.validUntil ? `, valid until ${cert.validUntil}` : ""})
+            </p>
+          ))}
+          {achievements.map((a) => (
+            <p key={a}>
+              <Check /> {a}
+            </p>
+          ))}
+          {education.map((edu) => (
+            <p key={edu.id}>
+              <Check /> {edu.degree}, {edu.institution}{edu.cgpa ? ` · CGPA: ${edu.cgpa}` : ""} ({edu.startYear} – {edu.endYear})
+            </p>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Toolkit ── */}
+      <section className="tools section-pad">
+        <SectionHeading eyebrow="03 / TOOLKIT" title="Technology serves the problem." />
+        <div className="tool-grid">
+          {Object.entries(tools).map(([group, items]) => (
+            <div key={group}>
+              <h3>{group}</h3>
+              <p>{items.join(" · ")}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}

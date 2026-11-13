@@ -90,55 +90,55 @@ export const projects: Project[] = [
     slug: "fluxpay",
     number: "03",
     title: "FluxPay",
-    category: "FINTECH · REAL-TIME SYSTEM · AI · PRODUCT UI",
+    category: "FINTECH · REAL-TIME SYSTEM · AI · JAVA · KAFKA · REDIS",
     filters: ["Product", "UI", "AI"],
-    description: "An intelligent payment routing platform designed to dynamically select optimal payment paths across UPI, cards and digital wallets.",
+    description: "A fault-tolerant, real-time payment routing platform supporting UPI, cards and digital wallets — achieving sub-30ms routing decisions under high concurrency via a multithreaded rule engine and Redis-based state caching.",
     tone: "flux",
-    status: "Professional engineering project",
-    outcome: "Sub-30ms routing decisions with a resilient operational model for real-time payment flows.",
+    status: "Professional engineering project · 2025 – Present",
+    outcome: "Sub-30ms routing decisions, exactly-once transaction processing, and AI-driven self-healing that reduces manual intervention.",
     screens: ["Operations dashboard", "Routing map", "Transaction monitor", "Provider health", "AI failure analysis"],
-    facts: ["<30ms routing", "Kafka events", "Redis state", "Fault tolerant", "Idempotent processing"],
+    facts: ["<30ms routing decisions", "Kafka idempotent consumers", "Redis-lock deduplication", "Exactly-once processing", "AI agentic self-healing"],
     caseStudy: {
-      problem: "Payment success depends on choosing a healthy path quickly while handling provider failures and duplicate events safely.",
-      users: "Payment operations and engineering teams monitoring routing health and transaction behavior.",
-      constraints: "Latency, concurrency, fault tolerance and idempotency are core system requirements. Sensitive production details are omitted.",
-      exploration: "Connected operational questions—what failed, why and what changed—to the system events needed to answer them.",
-      architecture: "Request → Routing Engine → Rules → Redis State → Payment Provider → Event Stream → Monitoring / AI.",
-      visual: "The interface pairs a live routing topology with dense but legible operational tables and health signals.",
-      system: "Provider states, event severity, transaction status and routing decisions share a consistent status language.",
+      problem: "Payment success depends on choosing a healthy path in milliseconds while handling provider failures, duplicate events and high concurrency safely.",
+      users: "Payment operations and engineering teams monitoring routing health and transaction behavior in real time.",
+      constraints: "Sub-30ms latency, concurrency safety, fault tolerance and exactly-once idempotency are non-negotiable system requirements.",
+      exploration: "Designed around a multithreaded rule engine with Redis-based state caching to push routing decisions under 30ms even under load.",
+      architecture: "Request → Multithreaded Rule Engine → Redis State Cache → Payment Provider → Kafka Event Stream → AI Self-Healing → Monitoring.",
+      visual: "The illustrative interface pairs a live routing topology with dense but legible operational tables and provider health signals.",
+      system: "Provider states, event severity, transaction status and routing decisions share a consistent operational status language.",
       responsive: "Mobile views prioritize payment health and incident triage over the full routing topology.",
       interaction: "Operators can move from a KPI change to provider detail, event history and failure context without losing their filters.",
-      ai: "AI-driven failure analysis groups related signals, explains likely causes and proposes recovery steps for human review.",
-      engineering: "Kafka supports event flow, Redis supports fast state access, and concurrent processing is designed for resilient routing decisions.",
-      challenges: "Representing a fast distributed system without implying certainty where signals are incomplete.",
-      learnings: "Operational interfaces should make uncertainty visible and shorten the path from anomaly to evidence."
+      ai: "Agentic self-healing workflows analyze payment failures in real time and automatically adjust routing rules — improving system resilience without manual intervention.",
+      engineering: "Idempotent Kafka consumers with Redis-lock deduplication guarantee exactly-once transaction processing during retries and failure scenarios. Scalability validated via load testing with failure isolation and graceful degradation.",
+      challenges: "Ensuring exactly-once correctness under concurrent retries while maintaining sub-30ms decision latency at scale.",
+      learnings: "Combining idempotent event processing with AI-driven self-healing removes the class of failures that previously required human intervention."
     }
   },
   {
     slug: "savrai",
     number: "04",
     title: "SavrAI",
-    category: "AI PRODUCT · FINTECH · PERSONALIZATION · UI",
+    category: "AI PRODUCT · FINTECH · MERN STACK · PYTHON · LLMs",
     filters: ["Product", "UI", "AI"],
-    description: "An AI-powered personal finance platform that transforms financial activity into understandable insights and personalized recommendations.",
+    description: "An AI-powered personal finance platform engineered with a fine-tuned LLM advisor, reinforcement-style feedback loops, Python spending-pattern pipelines, and secure JWT-based full-stack infrastructure.",
     tone: "savr",
-    status: "AI product project",
-    outcome: "A finance experience that turns transaction data into understandable explanations and next steps.",
+    status: "AI product project · Jan 2025 – Present",
+    outcome: "A personalized finance experience where recommendation quality improves over time through user behavior signals and fine-tuned LLM responses.",
     screens: ["Financial overview", "Spending analysis", "AI advisor", "Goals", "Recommendations"],
     caseStudy: {
-      problem: "Financial dashboards show what happened but often fail to explain why it changed or what a person can do next.",
-      users: "People who want to understand spending patterns and make more informed financial decisions.",
-      constraints: "Insights must be understandable, privacy-aware and careful not to present automated suggestions as certainty.",
-      exploration: "Tested chart-first, conversation-first and guided-insight models before centering the experience on explainable findings.",
-      architecture: "Overview, transactions, trends, goals and advisor views share the same financial context.",
-      visual: "Calm data visualization, clear comparisons and focused recommendation cards avoid alarmist financial UI.",
-      system: "Insight, trend, transaction, goal and recommendation components adapt across summary and detail contexts.",
-      responsive: "Mobile emphasizes the daily snapshot and lets users reveal deeper trends when needed.",
-      interaction: "Users can move from an explanation to the underlying transactions, then ask a follow-up without losing context.",
-      ai: "The advisor explains changes with evidence and offers a specific analysis action instead of ending at a generic chat response.",
-      engineering: "The UI is modeled around structured insight objects that can stream, cite transaction groups and expose next actions.",
-      challenges: "Making AI feel useful without overstepping into opaque or overly prescriptive financial advice.",
-      learnings: "A strong AI answer pairs a concise explanation with inspectable evidence and a reversible next step."
+      problem: "Financial dashboards show what happened but fail to explain why it changed or what a person should do next — and generic AI advisors don't improve from user behavior.",
+      users: "People who want to understand spending patterns and make more informed, personalized financial decisions.",
+      constraints: "Insights must be privacy-aware; the LLM advisor must improve over time without exposing raw user data; authentication must be role-based.",
+      exploration: "Engineered reinforcement-style feedback loops so the fine-tuned LLM improves recommendation quality based on how users respond to suggestions over time.",
+      architecture: "MERN Stack frontend and APIs → Python behavioral insight pipelines → Fine-tuned LLM advisor → MongoDB data models → JWT auth with RBAC.",
+      visual: "Calm data visualization, clear comparisons and focused recommendation cards built with Tailwind CSS avoid alarmist financial UI patterns.",
+      system: "Insight, trend, transaction, goal and recommendation components share the same financial context and adapt across summary and detail views.",
+      responsive: "Mobile emphasizes the daily snapshot and lets users reveal deeper trends and advisor suggestions on demand.",
+      interaction: "Users can move from an AI explanation to the underlying transactions, then ask a follow-up without losing context.",
+      ai: "Fine-tuned LLMs with reinforcement-style feedback loops improve recommendation quality over time. Python pipelines detect spending patterns and generate behavioral insights automatically.",
+      engineering: "Secure REST APIs handle authentication, financial data ingestion and analytics. Scalable NoSQL data models in MongoDB support complex financial queries. JWT-based auth with role-based access control secures the full-stack application.",
+      challenges: "Ensuring the LLM advisor stays relevant and improves over time without reinforcing poor financial decisions or violating user privacy.",
+      learnings: "Reinforcement-style feedback on a domain-specific fine-tuned model produces measurably better recommendations than generic LLM prompting alone."
     }
   },
   {
@@ -170,8 +170,37 @@ export const projects: Project[] = [
     }
   },
   {
-    slug: "orbit",
+    slug: "political-fund-transparency",
     number: "06",
+    title: "Political Fund Transparency",
+    kicker: "PUBLISHED RESEARCH · IJRASET 2025",
+    category: "BLOCKCHAIN · ETHEREUM · REACT · NODE.JS · WEB3",
+    filters: ["Product", "AI", "Experiments"],
+    description: "A tamper-proof donation tracking system using Ethereum smart contracts on Sepolia Testnet — ensuring immutable, auditable fund flows with full traceability. Research published in IJRASET 2025.",
+    tone: "signal",
+    status: "Published research project · Aug 2024 – May 2025",
+    outcome: "Immutable, auditable political fund tracking with real-time transparency dashboards, backed by published research in IJRASET 2025.",
+    screens: ["Donation dashboard", "Transaction explorer", "Smart contract viewer", "Fund flow graph", "Audit trail"],
+    facts: ["Ethereum smart contracts", "Sepolia Testnet deployment", "IJRASET 2025 published", "Immutable audit trail", "Real-time transparency"],
+    caseStudy: {
+      problem: "Political fund flows are opaque and difficult to audit — donations can be rerouted or misreported without an independent, verifiable record.",
+      users: "Citizens, journalists, election monitors and regulatory bodies who need a trustless way to verify political donation flows.",
+      constraints: "The system must be tamper-proof by design, publicly verifiable without central authority, and performant enough for real-time dashboards.",
+      exploration: "Designed around Ethereum smart contracts as the immutable source of truth, with backend aggregation services providing query performance for dashboards.",
+      architecture: "Ethereum smart contracts (Solidity) on Sepolia Testnet → Web3.js event listeners → Node.js aggregation backend → REST APIs → React transparency dashboards.",
+      visual: "Clean transparency-first interface with fund flow graphs, transaction explorer and audit trail designed for non-technical citizens.",
+      system: "Donation records, smart contract events, fund flows and audit entries share a consistent verification status language.",
+      responsive: "Mobile surfaces the most recent transactions and fund totals; desktop enables deep audit trail investigation.",
+      interaction: "Users can drill from a headline fund total through aggregated flows down to an individual smart contract transaction on the testnet.",
+      ai: "Findings and research methodology published in IJRASET 2025 — 'Corruption Avoidance in Political Party Funds Using Blockchain Technology'.",
+      engineering: "Smart contracts deployed on Sepolia Testnet with Solidity. Backend services aggregate blockchain transaction data via Web3.js and expose it through REST APIs. React frontend powers real-time transparency dashboards.",
+      challenges: "Balancing blockchain immutability (which prevents corrections) with the real-world need to handle test data, redeployments and evolving contract logic during research.",
+      learnings: "Blockchain is most credible when the smart contract logic itself is published and verifiable — the backend and UI only need to present what the chain already proved."
+    }
+  },
+  {
+    slug: "orbit",
+    number: "07",
     title: "Orbit",
     kicker: "CONCEPT · WEB DESIGN",
     category: "AI SAAS · MARKETING · WEB DESIGN",
@@ -199,7 +228,7 @@ export const projects: Project[] = [
   },
   {
     slug: "signal",
-    number: "07",
+    number: "08",
     title: "Signal",
     kicker: "CONCEPT · SELF-INITIATED",
     category: "DATA VISUALIZATION · DASHBOARD · PRODUCT UI",
@@ -228,18 +257,20 @@ export const projects: Project[] = [
 ];
 
 export const capabilities = [
-  { number: "01", title: "UI & Web Design", copy: "Designing clean, responsive interfaces with strong hierarchy, typography, spacing, interaction patterns and visual systems.", skills: ["Web Design", "UI Design", "Responsive Design", "Design Systems", "Figma", "Prototyping", "Accessibility"] },
-  { number: "02", title: "Frontend Engineering", copy: "Turning product ideas and designs into scalable, responsive and production-ready experiences.", skills: ["React", "Angular", "TypeScript", "JavaScript", "HTML/CSS", "REST APIs", "Real-time interfaces", "Performance"] },
-  { number: "03", title: "AI & Agentic UI", copy: "Designing interfaces where AI can understand context, reason about tasks, interact with tools and help users accomplish real work.", skills: ["AI Interfaces", "Agentic Workflows", "AI Copilots", "LLM Interfaces", "Human-in-the-loop", "Tool Calling", "Streaming UI"] }
+  { number: "01", title: "Backend & Systems Engineering", copy: "Building high-scale, event-driven, cloud-native backend systems with a focus on correctness, low latency and production reliability.", skills: ["Java", "Spring Boot", "Microservices", "Event-Driven Architecture", "REST APIs", "Distributed Systems", "Low-Latency Systems"] },
+  { number: "02", title: "Messaging, Caching & Databases", copy: "Designing resilient data pipelines and storage layers with exactly-once guarantees, idempotent processing and fast state access.", skills: ["Apache Kafka", "Redis", "PostgreSQL", "MongoDB", "MySQL", "Idempotency", "Deduplication"] },
+  { number: "03", title: "AI & Agentic Systems", copy: "Integrating LLM-powered automation and agentic workflows into production backend services for real-time intelligence and self-healing capabilities.", skills: ["LLM Fine-Tuning", "HuggingFace", "OpenAI", "Spring AI (MCP)", "Agentic Workflows", "Prompt Engineering", "Anomaly Detection"] }
 ];
 
-export const experiments = ["Agentic UI", "AI-native dashboards", "Adaptive interfaces", "AI design assistants", "Generative interfaces", "Voice + UI interactions", "Real-time collaborative interfaces", "AI-powered developer tools", "Design-to-code workflows", "Human-in-the-loop systems"];
+export const experiments = ["Agentic self-healing payment routing", "LLM fine-tuning for financial query understanding", "AI-driven anomaly detection pipelines", "Kafka idempotency patterns", "Spring AI MCP integration", "Redis-lock deduplication strategies", "Blockchain-based fund transparency", "Real-time collaborative interfaces", "AI-powered developer tools", "Human-in-the-loop systems"];
 
 export const tools = {
-  Frontend: ["React", "Angular", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind"],
-  Backend: ["Java", "Spring Boot", "Node.js", "Express"],
-  AI: ["LLMs", "Prompt Engineering", "AI Workflow Orchestration", "Spring AI", "HuggingFace"],
-  Systems: ["Kafka", "Redis", "PostgreSQL", "MongoDB", "MySQL"],
-  Cloud: ["AWS", "Docker", "CI/CD", "Prometheus", "Grafana", "Git"],
-  Design: ["Figma", "Design Systems", "Responsive Design", "Prototyping", "UI Design"]
+  Languages: ["Java", "Python", "JavaScript (ES6+)", "TypeScript", "SQL", "C++"],
+  Backend: ["Spring Boot", "Spring MVC", "Node.js", "Express.js", "REST APIs", "Microservices"],
+  "Concurrency & JVM": ["Multithreading", "Executors", "Thread Pools", "JVM Tuning", "Async Processing"],
+  "Messaging & Cache": ["Apache Kafka", "Redis (Caching, Pub/Sub, Locking)"],
+  Databases: ["PostgreSQL", "MySQL", "MongoDB", "Redis"],
+  AI: ["LLM Fine-Tuning (OpenAI, HuggingFace)", "Spring AI (MCP)", "Agentic Workflows", "Prompt Engineering"],
+  Frontend: ["React", "Redux", "AngularJS", "HTML5", "CSS3", "Tailwind CSS"],
+  "Cloud & DevOps": ["AWS", "Docker", "CI/CD", "Jenkins", "Prometheus", "Grafana", "Git"],
 };

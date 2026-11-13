@@ -1,5 +1,5 @@
 import { Activity, ArrowUpRight, Bot, Check, CircleDollarSign, FileText, Search, Sparkles, Users } from "lucide-react";
-import type { Project } from "@/data/portfolio";
+import type { Project } from "@/lib/resume-store";
 
 const chart = [34, 48, 41, 68, 57, 77, 72, 91, 84, 96];
 
